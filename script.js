@@ -116,8 +116,120 @@ week.remove();
 
 };
 
-document.getElementById("generate").onclick=()=>{
+document.getElementById("generate").onclick = () => {
 
-alert("Phase 2 will generate the official CBC Scheme of Work table.");
+    let output = `
+    <html>
+    <head>
+        <title>CBC Scheme of Work</title>
+        <style>
+            body{
+                font-family:Arial,sans-serif;
+                padding:20px;
+            }
+
+            table{
+                width:100%;
+                border-collapse:collapse;
+            }
+
+            th,td{
+                border:1px solid #000;
+                padding:8px;
+                vertical-align:top;
+            }
+
+            th{
+                background:#f2f2f2;
+            }
+
+            h2{
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+
+    <h2>CBC Scheme of Work</h2>
+
+    <table>
+
+    <tr>
+        <th>Week</th>
+        <th>Periods</th>
+        <th>Unit</th>
+        <th>Lesson</th>
+        <th>Knowledge</th>
+        <th>Skills</th>
+        <th>Attitudes</th>
+        <th>Teaching Methods</th>
+        <th>Resources</th>
+        <th>Observation</th>
+    </tr>
+    `;
+
+    document.querySelectorAll(".week").forEach((week)=>{
+
+        const weekInputs = week.querySelectorAll(".grid input");
+
+        const weekNumber = weekInputs[0].value;
+
+        const lessons = week.querySelectorAll(".lesson");
+
+        lessons.forEach((lesson,index)=>{
+
+            const inputs = lesson.querySelectorAll("input");
+
+            const textareas = lesson.querySelectorAll("textarea");
+
+            output += `
+            <tr>
+
+                ${
+                    index===0
+                    ? `<td rowspan="${lessons.length}">${weekNumber}</td>`
+                    : ""
+                }
+
+                <td>${inputs[0].value}</td>
+
+                <td>${inputs[1].value}</td>
+
+                <td>${inputs[2].value}</td>
+
+                <td>${textareas[0].value}</td>
+
+                <td>${textareas[1].value}</td>
+
+                <td>${textareas[2].value}</td>
+
+                <td>${textareas[3].value}</td>
+
+                <td>${textareas[4].value}</td>
+
+                <td>${textareas[5].value}</td>
+
+            </tr>
+            `;
+
+        });
+
+    });
+
+    output += `
+    </table>
+
+    </body>
+
+    </html>
+    `;
+
+    const printWindow = window.open("", "_blank");
+
+    printWindow.document.write(output);
+
+    printWindow.document.close();
+
+    printWindow.print();
 
 };
